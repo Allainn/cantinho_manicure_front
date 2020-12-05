@@ -7,6 +7,7 @@ from .view import servico as ser
 from .view import funcionario as fun
 from .view import fornecedor as forn
 from .view import tipo_quantidade as tpq
+from .view import produto as pro
 
 headers = {
    'Content-Type': 'application/json'
@@ -94,3 +95,18 @@ def del_tipos_quantidade(id):
 @login_required
 def edit_tipos_quantidade(id):
    return tpq.editar(id)
+
+@main.route('/produtos', methods=['GET', 'POST'])
+@login_required
+def produtos():
+   return pro.main()
+
+@main.route('/produtos/d/<int:id>', methods = ['POST','GET'])
+@login_required
+def del_produto(id):
+   return pro.deletar(id)
+
+@main.route('/produtos/e/<int:id>', methods = ['POST','GET'])
+@login_required
+def edit_produto(id):
+   return pro.editar(id)

@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, \
-    SelectField, DateField, TextAreaField
+    SelectField, DateField, TextAreaField, IntegerField, DecimalField
 from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo, \
     Optional, URL
 from wtforms import ValidationError
@@ -60,4 +60,13 @@ class FornecedorForm(FlaskForm):
 class TipoQuantidadeForm(FlaskForm):
     descricao = StringField('Descrição', validators=[DataRequired(), Length(1, 64)])
     sigla = StringField('Sigla', validators=[DataRequired(), Length(1, 2)])
+    submit = SubmitField('Registrar')
+
+class ProdutoForm(FlaskForm):
+    descricao = StringField('Descrição', validators=[DataRequired(), Length(1, 64)])
+    quantidade = IntegerField('Quantidade', validators=[DataRequired()])
+    tipo_quantidade = SelectField('Tipo Quantidade', 
+                                validators=[DataRequired()], choices=[])
+    preco_un = DecimalField("Preço Unidade", validators=[DataRequired()])
+    observacao = TextAreaField('Observação', validators=[Optional(), Length(1, 256)])
     submit = SubmitField('Registrar')
