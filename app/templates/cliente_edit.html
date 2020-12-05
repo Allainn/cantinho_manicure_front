@@ -1,0 +1,32 @@
+{% extends "base_cadastro.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Cantinho da Manicure{% endblock %}
+
+{% block page_content %}
+<div class="row">
+  <div class="col-md-4 offset-md-4">
+    <div class="card card-body" style="margin-bottom: 1.5em;">
+      {{ wtf.quick_form(form) }}
+    </div>
+  </div>
+</div>
+<script>
+  let estado_select = document.getElementById('estado');
+  let cidade_select = document.getElementById('cidade');
+
+  estado_select.onchange = function() {
+    estado = estado_select.value;
+    fetch("{{ url_base }}cidades/uf/" + estado).then(function(response){
+      response.json().then(function(data){
+        let optionHTML = '';
+
+        for (let cidade of data.cidades) {
+          optionHTML += '<option value="' + String(cidade.id) + '">' + cidade.descricao + '</option>';
+        }
+        cidade_select.innerHTML = optionHTML;
+      });
+    });
+  }
+</script>
+{% endblock %}

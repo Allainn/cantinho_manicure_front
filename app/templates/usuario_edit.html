@@ -1,0 +1,14 @@
+{% extends "base_cadastro.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Cantinho da Manicure{% endblock %}
+
+{% block page_content %}
+<div class="row">
+  <div class="col-md-4 offset-md-4">
+    <div class="card card-body">
+      {{ wtf.quick_form(form) }}
+    </div>
+  </div>
+</div>
+{% endblock %}
