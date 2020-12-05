@@ -1,0 +1,7 @@
+{% import "bootstrap/wtf.html" as wtf %}
+  <div class="col-md-4 offset-md-4">
+    <div class="card card-body" style="margin-bottom: 1.5em;">
+      {{ wtf.quick_form(form) }}
+    </div>
+  </div>
+  {% block exibir %}{% endblock %}

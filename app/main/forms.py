@@ -24,7 +24,6 @@ class RegistrationForm(FlaskForm):
 class ClienteForm(FlaskForm):
     nome = StringField('Nome', validators=[DataRequired(), Length(1, 64)])
     estado = SelectField('Estado', validators=[DataRequired()], choices=[])
-    # cidade = SelectField('Cidade', choices=[], validate=False)
     cidade = NonValidatingSelectField('Cidade', choices=[], validators=[DataRequired()])
     bairro = StringField('Bairro', validators=[DataRequired(), Length(1, 64)])
     rua = StringField('Rua', validators=[DataRequired(), Length(1, 64)])

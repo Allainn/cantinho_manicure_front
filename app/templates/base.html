@@ -32,17 +32,38 @@
                 <li><a href="{{ url_for('main.index') }}">Home</a></li>
                 
                 {% if current_user.is_authenticated %}
-                    {% if session['user'].tp_user|upper == 'USUARIO' %}
-                        {% include "base_usuario.html" %}
-                    {% elif session['user'].tp_user|upper == 'ADMINISTRADOR' or session['user'].tp_user|upper == 'FUNCIONARIO'%}    
-                        {% include "base_usuario.html" %}
+                    {% if session['user'].tp_user|upper == 'USUARIO' or 
+                          session['user'].tp_user|upper == 'ADMINISTRADOR' or 
+                          session['user'].tp_user|upper == 'FUNCIONARIO' or
+                          session['user'].tp_user|upper == 'CLIENTE'%}
+                        <ul class="nav navbar-nav">
+                            <li><a href="{{ url_for('main.servicos') }}">Serviços</a></li>
+                        </ul>
+                    {% endif %}
+                    {% if session['user'].tp_user|upper == 'ADMINISTRADOR' or 
+                          session['user'].tp_user|upper == 'FUNCIONARIO'%}    
                         <li>
-                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastrar</a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                {% if session['user'].tp_user|upper == 'ADMINISTRADOR'%}
-                                    <li><a class="dropdown-item" href="{{ url_for('main.usuarios') }}">Usuários</a></li>
-                                {% endif %}
-                                <li><a class="dropdown-item" href="{{ url_for('main.clientes') }}">Clientes</a></li>
+                            <a class="dropdown-toggle" href="#" role="button" 
+                               id="dropdownMenuLink" data-toggle="dropdown" 
+                               aria-haspopup="true" aria-expanded="false">
+                                Cadastrar
+                            </a>
+                            <ul class="dropdown-menu" 
+                                aria-labelledby="dropdownMenuLink">
+                                    {% if session['user'].tp_user|upper == 'ADMINISTRADOR'%}
+                                        <li><a class="dropdown-item" 
+                                            href="{{ url_for('main.usuarios') }}">
+                                                Usuário
+                                        </a></li>
+                                        <li><a class="dropdown-item" 
+                                            href="{{ url_for('main.funcionarios') }}">
+                                                Funcionário
+                                        </a></li>
+                                    {% endif %}
+                                <li><a class="dropdown-item" 
+                                    href="{{ url_for('main.clientes') }}">
+                                        Cliente
+                                </a></li>
                             </ul>
                         </li>
                     {% endif %}  

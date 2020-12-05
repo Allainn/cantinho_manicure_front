@@ -1,0 +1,18 @@
+<script>
+    let estado_select = document.getElementById('estado');
+    let cidade_select = document.getElementById('cidade');
+  
+    estado_select.onchange = function() {
+      estado = estado_select.value;
+      fetch("{{ url_base }}cidades/uf/" + estado).then(function(response){
+        response.json().then(function(data){
+          let optionHTML = '';
+  
+          for (let cidade of data.cidades) {
+            optionHTML += '<option value="' + String(cidade.id) + '">' + cidade.descricao + '</option>';
+          }
+          cidade_select.innerHTML = optionHTML;
+        });
+      });
+    }
+</script>

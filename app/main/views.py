@@ -4,6 +4,7 @@ from .view import index as ind
 from .view import usuario as usr
 from .view import cliente as cli
 from .view import servico as ser
+from .view import funcionario as fun
 
 headers = {
    'Content-Type': 'application/json'
@@ -46,3 +47,18 @@ def del_cliente(id):
 @login_required
 def edit_cliente(id):
    return cli.edit_cliente(id)
+
+@main.route('/funcionarios', methods=['GET', 'POST'])
+@login_required
+def funcionarios():
+   return fun.funcionarios()
+
+@main.route('/funcionarios/d/<int:id>', methods = ['POST','GET'])
+@login_required
+def del_funcionario(id):
+   return fun.del_funcionario(id)
+
+@main.route('/funcionarios/e/<int:id>', methods = ['POST','GET'])
+@login_required
+def edit_funcionario(id):
+   return fun.edit_funcionario(id)
