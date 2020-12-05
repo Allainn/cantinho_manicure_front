@@ -9,7 +9,7 @@ headers = {
    'Content-Type': 'application/json'
 }
 
-def usuarios():
+def main():
    url_base = current_app.config.get('URL_API')
    form = RegistrationForm()
    tp_user = []
@@ -48,7 +48,7 @@ def usuarios():
          return resp
    return redirect(url_for('main.index'))
 
-def del_usuario(id):
+def deletar(id):
    url_base = current_app.config.get('URL_API')
    response = requests.delete(url_base+"usuarios/"+str(id), 
                             auth=HTTPBasicAuth(session['user']['token'], ''))
@@ -58,7 +58,7 @@ def del_usuario(id):
       verificar(response, 'deletar usuário')
    return redirect(url_for('main.usuarios'))
 
-def edit_usuario(id):
+def editar(id):
    url_base = current_app.config.get('URL_API')
    response = requests.get(url_base+"usuarios/"+str(id), 
                               auth=HTTPBasicAuth(session['user']['token'], ''))
@@ -89,8 +89,7 @@ def edit_usuario(id):
             return redirect(url_for('main.usuarios'))
       form.email.data = response.json()['email']
       form.login.data = response.json()['login']
-      return render_template('usuario_edit.html', usuario = response.json(), 
-                            form=form)
+      return render_template('all_edit.html', form=form, titulo='Usuário')
    else:
       resp = verificar(response, 'editar usuário')
       if resp:

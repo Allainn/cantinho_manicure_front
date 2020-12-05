@@ -46,28 +46,33 @@ def pre_clientes(form):
 
     return data_cli
 
-def preencher_form(form, cidade=False, estado=None):
+def preencher_form(form, cidade=False, estado=None, usuario=True, default=True):
     url_base = current_app.config.get('URL_API')
-    response_es = requests.get(url_base+"estados/", 
+    if default:
+        response_es = requests.get(url_base+"estados/", 
+                                    auth=HTTPBasicAuth(session['user']['token'], ''))
+        if response_es.ok:
+            form.estado.choices = [(str(es['id']), es['uf']) \
+                                        for es in response_es.json()['estados']]
+        if not cidade:
+            estado = form.estado.choices[0][0]
+            cidade = True
+    if usuario:
+        response_user = requests.get(url_base+"usuarios/", 
                                 auth=HTTPBasicAuth(session['user']['token'], ''))
-    if response_es.ok:
-        form.estado.choices = [(str(es['id']), es['uf']) \
-                                    for es in response_es.json()['estados']]
-    response_user = requests.get(url_base+"usuarios/", 
-                                auth=HTTPBasicAuth(session['user']['token'], ''))
-    if response_user.ok:
-        form.usuario.choices = [("0","")]+[(str(user['id']), user['login']) \
+        if response_user.ok:
+            form.usuario.choices = [("0","")]+[(str(user['id']), user['login']) \
                                     for user in response_user.json()['usuarios']]
-    if cidade:
+    if cidade or default:
         response_cid = requests.get(url_base+"cidades/uf/"+str(estado), 
                               auth=HTTPBasicAuth(session['user']['token'], ''))
         if response_cid.ok:
             form.cidade.choices = [(str(cid['id']), cid['descricao']) \
                             for cid in response_cid.json()['cidades']]
 
-def clientes():
+def main():
     url_base = current_app.config.get('URL_API')
-    form = ClienteForm()
+    form = ClienteForm(estado = '31', cidade = '3118007')
     preencher_form(form)
 
     response = requests.get(url_base+"clientes/", 
@@ -84,6 +89,7 @@ def clientes():
                 flash('Cliente cadastrado com sucesso.')
                 return redirect(url_for('main.clientes'))
             flash(response_cli.json()['mensagemUsuario'])
+        preencher_form(form, cidade=True, estado=form.estado.data, default=False, usuario=False)
         return render_template("clientes.html", url_base=url_base, form=form, 
                                 clientes=response.json()['clientes'])
     else:
@@ -92,7 +98,7 @@ def clientes():
             return resp
     return redirect(url_for('main.index'))
 
-def del_cliente(id):
+def deletar(id):
     url_base = current_app.config.get('URL_API')
     response = requests.delete(url_base+"clientes/"+str(id), 
                                 auth=HTTPBasicAuth(session['user']['token'], ''))
@@ -110,7 +116,7 @@ def del_cliente(id):
             return resp
     return redirect(url_for('main.clientes'))
 
-def edit_cliente(id):
+def editar(id):
     url_base = current_app.config.get('URL_API')
     response = requests.get(url_base+"clientes/"+str(id), 
                                 auth=HTTPBasicAuth(session['user']['token'], ''))
@@ -149,7 +155,8 @@ def edit_cliente(id):
         form.dataNascimento.data = data_nas
         form.instagram.data = cliente['instagram']
         form.facebook.data = cliente['facebook']
-        return render_template('cliente_edit.html', form=form, url_base=url_base)
+        return render_template('all_edit.html', form=form, titulo='Cliente', 
+                                url_base=url_base)
     else:
         resp = verificar(response, 'editar cliente')
         if resp:

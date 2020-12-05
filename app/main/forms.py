@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, DateField
-from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo, Optional
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, \
+    SelectField, DateField, TextAreaField
+from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo, \
+    Optional, URL
 from wtforms import ValidationError
 
 class NonValidatingSelectField(SelectField):
@@ -23,6 +25,7 @@ class RegistrationForm(FlaskForm):
 
 class ClienteForm(FlaskForm):
     nome = StringField('Nome', validators=[DataRequired(), Length(1, 64)])
+    usuario = SelectField('Usuário', choices=[])
     estado = SelectField('Estado', validators=[DataRequired()], choices=[])
     cidade = NonValidatingSelectField('Cidade', choices=[], validators=[DataRequired()])
     bairro = StringField('Bairro', validators=[DataRequired(), Length(1, 64)])
@@ -34,5 +37,27 @@ class ClienteForm(FlaskForm):
     dataNascimento = DateField('Data Nascimento', format='%d/%m/%Y', validators=[Optional()])
     instagram = StringField('Instagram', validators=[Optional(), Length(1, 64)])
     facebook = StringField('Facebook', validators=[Optional(), Length(1, 64)])
-    usuario = SelectField('Usuário', choices=[])
+    submit = SubmitField('Registrar')
+
+class FornecedorForm(FlaskForm):
+    nome = StringField('Nome', validators=[DataRequired(), Length(1, 64)])
+    email = StringField('Email', validators=[Optional(), Length(1, 64),
+                                             Email()])
+    estado = SelectField('Estado', validators=[DataRequired()], choices=[])
+    cidade = NonValidatingSelectField('Cidade', choices=[], validators=[DataRequired()])
+    bairro = StringField('Bairro', validators=[DataRequired(), Length(1, 64)])
+    rua = StringField('Rua', validators=[DataRequired(), Length(1, 64)])
+    complemento = StringField('Complemento', validators=[Optional(), Length(1, 64)])
+    numero = StringField('Número', validators=[Optional(), Length(1, 10)])
+    telefone1 = StringField('Telefone 1', validators=[DataRequired(), Length(1, 20)])
+    telefone2 = StringField('Telefone 2', validators=[Optional(), Length(1, 20)])
+    site = StringField('Site', validators=[Optional(), URL(), Length(1, 64)])
+    instagram = StringField('Instagram', validators=[Optional(), Length(1, 64)])
+    facebook = StringField('Facebook', validators=[Optional(), Length(1, 64)])
+    observacao = TextAreaField('Observação', validators=[Optional(), Length(1, 256)])
+    submit = SubmitField('Registrar')
+
+class TipoQuantidadeForm(FlaskForm):
+    descricao = StringField('Descrição', validators=[DataRequired(), Length(1, 64)])
+    sigla = StringField('Sigla', validators=[DataRequired(), Length(1, 2)])
     submit = SubmitField('Registrar')

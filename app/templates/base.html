@@ -60,10 +60,18 @@
                                                 Funcionário
                                         </a></li>
                                     {% endif %}
-                                <li><a class="dropdown-item" 
-                                    href="{{ url_for('main.clientes') }}">
-                                        Cliente
-                                </a></li>
+                                    <li><a class="dropdown-item" 
+                                        href="{{ url_for('main.clientes') }}">
+                                            Cliente
+                                    </a></li>
+                                    <li><a class="dropdown-item" 
+                                        href="{{ url_for('main.fornecedores') }}">
+                                            Fornecedor
+                                    </a></li>
+                                    <li><a class="dropdown-item" 
+                                        href="{{ url_for('main.tipos_quantidade') }}">
+                                            Tipo Quantidade
+                                    </a></li>
                             </ul>
                         </li>
                     {% endif %}  

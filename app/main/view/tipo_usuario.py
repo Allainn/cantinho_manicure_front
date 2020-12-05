@@ -14,6 +14,8 @@ def alterar_tipo_usuario(id_user, id_tp, desc):
    if response_usr.ok:
       usr = response_usr.json()['login']
       tp_usr = response_usr.json()['tipo_usuario']['descricao'].upper()
+      print(tp_usr)
+      print(id_tp)
       if (tp_usr == 'USUARIO' and id_tp != 1) or \
             (tp_usr == 'CLIENTE' and id_tp != 2) or \
             (tp_usr == 'FUNCIONARIO' and id_tp != 3):
