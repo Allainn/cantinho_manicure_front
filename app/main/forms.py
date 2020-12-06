@@ -70,3 +70,10 @@ class ProdutoForm(FlaskForm):
     preco_un = DecimalField("Preço Unidade", validators=[DataRequired()])
     observacao = TextAreaField('Observação', validators=[Optional(), Length(1, 256)])
     submit = SubmitField('Registrar')
+
+class EquipamentoForm(FlaskForm):
+    descricao = StringField('Descrição', validators=[DataRequired(), Length(1, 64)])
+    tempo = IntegerField('Tempo de Uso', validators=[DataRequired()])
+    preco_tempo = DecimalField("Preço Tempo", validators=[DataRequired()])
+    observacao = TextAreaField('Observação', validators=[Optional(), Length(1, 256)])
+    submit = SubmitField('Registrar')

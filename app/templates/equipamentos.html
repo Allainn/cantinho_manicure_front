@@ -4,7 +4,7 @@
 {% block title %}Cantinho da Manicure{% endblock %}
 
 {% block page_content %}
-<div class="row"><h3>Produto</h3></div>
+<div class="row"><h3>Equipamento</h3></div>
   <div class="row">
     {% include "base_edit.html" %}
     <div class="col-md-8">
@@ -12,22 +12,20 @@
         <thead>
           <tr>
             <td>Descrição</td>
-            <td>Quantidade</td>
-            <td>Tp. Quant.</td>
-            <td>Preço Un</td>
+            <td>Tempo de Uso</td>
+            <td>Preço Tempo</td>
             <td>Ação</td>
           </tr>
         </thead>
         <tbody>
-          {% for data in produtos %}
+          {% for data in equipamentos %}
             <tr>
               <td>{{data.descricao}}</td>
-              <td>{{data.quantidade}}</td>
-              <td>{{data.tipo_quantidade.sigla}}</td>
-              <td>R$ {{data.preco_un}}</td>
+              <td>{{data.tempo}}</td>
+              <td>R$ {{data.preco_tempo}}</td>
               <td>
-                <a href="{{ url_for('main.produtos') }}/e/{{data.id}}" class="btn btn-primary btn-sm">Editar</a>
-                <a href="{{ url_for('main.produtos') }}/d/{{data.id}}" class="btn btn-danger btn-delete btn-sm">Deletar</a>
+                <a href="{{ url_for('main.equipamentos') }}/e/{{data.id}}" class="btn btn-primary btn-sm">Editar</a>
+                <a href="{{ url_for('main.equipamentos') }}/d/{{data.id}}" class="btn btn-danger btn-delete btn-sm">Deletar</a>
               </td>
             </tr>
           {% endfor %}

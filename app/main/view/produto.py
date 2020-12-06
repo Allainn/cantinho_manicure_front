@@ -26,7 +26,6 @@ def main():
                             auth=HTTPBasicAuth(session['user']['token'], ''))
     if response.ok:
         if form.validate_on_submit():
-            print(form.tipo_quantidade.data)
             data = { 'descricao'        : form.descricao.data,
                      'quantidade'       : form.quantidade.data,
                      'tipo_quantidade'  : {
@@ -40,7 +39,7 @@ def main():
                             headers=headers,
                             auth=HTTPBasicAuth(session['user']['token'], ''))
             if response_pro.ok:
-                flash('Produtos cadastrado com sucesso.')
+                flash('Produto cadastrado com sucesso.')
                 return redirect(url_for('main.produtos'))
             flash(response_pro.json()['mensagemUsuario'])
         return render_template("produtos.html", form=form, 

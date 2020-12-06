@@ -8,6 +8,7 @@ from .view import funcionario as fun
 from .view import fornecedor as forn
 from .view import tipo_quantidade as tpq
 from .view import produto as pro
+from .view import equipamento as equ
 
 headers = {
    'Content-Type': 'application/json'
@@ -110,3 +111,18 @@ def del_produto(id):
 @login_required
 def edit_produto(id):
    return pro.editar(id)
+
+@main.route('/equipamentos', methods=['GET', 'POST'])
+@login_required
+def equipamentos():
+   return equ.main()
+
+@main.route('/equipamentos/d/<int:id>', methods = ['POST','GET'])
+@login_required
+def del_equipamento(id):
+   return equ.deletar(id)
+
+@main.route('/equipamentos/e/<int:id>', methods = ['POST','GET'])
+@login_required
+def edit_equipamento(id):
+   return equ.editar(id)
