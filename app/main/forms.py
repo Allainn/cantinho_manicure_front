@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, \
-    SelectField, DateField, TextAreaField, IntegerField, DecimalField
+    SelectField, DateField, TextAreaField, IntegerField, DecimalField, FieldList, \
+    FormField
 from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo, \
     Optional, URL
 from wtforms import ValidationError
@@ -34,7 +35,7 @@ class ClienteForm(FlaskForm):
     numero = StringField('Número', validators=[Optional(), Length(1, 10)])
     telefone1 = StringField('Telefone 1', validators=[DataRequired(), Length(1, 20)])
     telefone2 = StringField('Telefone 2', validators=[Optional(), Length(1, 20)])
-    dataNascimento = DateField('Data Nascimento', format='%d/%m/%Y', validators=[Optional()])
+    dataNascimento = DateField('Data Nascimento', validators=[Optional()])
     instagram = StringField('Instagram', validators=[Optional(), Length(1, 64)])
     facebook = StringField('Facebook', validators=[Optional(), Length(1, 64)])
     submit = SubmitField('Registrar')
@@ -75,5 +76,15 @@ class EquipamentoForm(FlaskForm):
     descricao = StringField('Descrição', validators=[DataRequired(), Length(1, 64)])
     tempo = IntegerField('Tempo de Uso', validators=[DataRequired()])
     preco_tempo = DecimalField("Preço Tempo", validators=[DataRequired()])
+    observacao = TextAreaField('Observação', validators=[Optional(), Length(1, 256)])
+    submit = SubmitField('Registrar')
+
+class CompraForm(FlaskForm):
+    data = DateField('Data', validators=[DataRequired()])
+    fornecedor = SelectField('Fornecedor', validators=[DataRequired()], choices=[])
+    produtos_select = SelectField('Produto', validators=[Optional()], choices=[], id='produto_select')
+    quantidade = IntegerField('Quantidade', validators=[Optional()])
+    preco_un = DecimalField("Preço Unidade", validators=[Optional()])
+    preco_total = StringField("Preço Total",validators=[DataRequired()], default='R$ 0.00')
     observacao = TextAreaField('Observação', validators=[Optional(), Length(1, 256)])
     submit = SubmitField('Registrar')

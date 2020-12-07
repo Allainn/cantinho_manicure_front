@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+
 {% block scripts %}
 {{ super() }}
 <script>
@@ -23,5 +24,30 @@
         );
     } );
      
+</script><script type=text/javascript>
+  try {
+    document.getElementById('dataNascimento').type='date';
+  } catch {}
+  try {
+    document.getElementById('data').type='date';
+  } catch {}
+  try{
+    document.getElementById('email').type='email';
+  } catch {}
+  try {
+    document.getElementById('quantidade').type='number';
+  } catch {}
+  try {
+    document.getElementById('preco_un').type='number';
+  } catch {}
+  try {
+    document.getElementById('tempo').type='number';
+  } catch {}
+  try {
+    document.getElementById('preco_tempo').type='number';
+  } catch {}
+  try {
+    document.getElementById('acao').style='width: 6.25em';
+  } catch {}
 </script>
 {% endblock %}

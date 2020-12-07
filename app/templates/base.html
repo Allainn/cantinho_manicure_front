@@ -7,6 +7,8 @@
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>  
  
@@ -36,9 +38,7 @@
                           session['user'].tp_user|upper == 'ADMINISTRADOR' or 
                           session['user'].tp_user|upper == 'FUNCIONARIO' or
                           session['user'].tp_user|upper == 'CLIENTE'%}
-                        <ul class="nav navbar-nav">
-                            <li><a href="{{ url_for('main.servicos') }}">Serviços</a></li>
-                        </ul>
+                        <li><a href="{{ url_for('main.servicos') }}">Serviços</a></li>
                     {% endif %}
                     {% if session['user'].tp_user|upper == 'ADMINISTRADOR' or 
                           session['user'].tp_user|upper == 'FUNCIONARIO'%}    
@@ -79,6 +79,10 @@
                                     <li><a class="dropdown-item" 
                                         href="{{ url_for('main.equipamentos') }}">
                                             Equipamento
+                                    </a></li>
+                                    <li><a class="dropdown-item" 
+                                        href="{{ url_for('main.compras') }}">
+                                            Compra
                                     </a></li>
                             </ul>
                         </li>

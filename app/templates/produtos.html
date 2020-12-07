@@ -15,7 +15,7 @@
             <td>Quantidade</td>
             <td>Tp. Quant.</td>
             <td>Preço Un</td>
-            <td>Ação</td>
+            <td id="acao">Ação</td>
           </tr>
         </thead>
         <tbody>
@@ -26,8 +26,14 @@
               <td>{{data.tipo_quantidade.sigla}}</td>
               <td>R$ {{data.preco_un}}</td>
               <td>
-                <a href="{{ url_for('main.produtos') }}/e/{{data.id}}" class="btn btn-primary btn-sm">Editar</a>
-                <a href="{{ url_for('main.produtos') }}/d/{{data.id}}" class="btn btn-danger btn-delete btn-sm">Deletar</a>
+                <a href="{{ url_for('main.produtos') }}/e/{{data.id}}" 
+                      class="btn btn-primary btn-sm">
+                  <i class="fa fa-edit"></i>    
+                </a>
+                <a href="{{ url_for('main.produtos') }}/d/{{data.id}}" 
+                      class="btn btn-danger btn-delete btn-sm">
+                  <i class="fa fa-trash"></i>
+                </a>
               </td>
             </tr>
           {% endfor %}

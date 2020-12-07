@@ -9,6 +9,7 @@ from .view import fornecedor as forn
 from .view import tipo_quantidade as tpq
 from .view import produto as pro
 from .view import equipamento as equ
+from .view import compra as com
 
 headers = {
    'Content-Type': 'application/json'
@@ -126,3 +127,18 @@ def del_equipamento(id):
 @login_required
 def edit_equipamento(id):
    return equ.editar(id)
+
+@main.route('/compras', methods=['GET', 'POST'])
+@login_required
+def compras():
+   return com.main()
+
+@main.route('/compras/d/<int:id>', methods = ['POST','GET'])
+@login_required
+def del_compra(id):
+   return com.deletar(id)
+
+@main.route('/compras/e/<int:id>', methods = ['POST','GET'])
+@login_required
+def edit_compra(id):
+   return com.editar(id)

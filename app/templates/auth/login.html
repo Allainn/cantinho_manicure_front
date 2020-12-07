@@ -12,4 +12,9 @@
     <br>
     <p>Novo usuário? <a href="{{ url_for('auth.register') }}">Click aqui para registrar</a>.</p>
 </div>
+<script> 
+    try{
+        document.getElementById('email').type='email';
+    } catch {}
+</script>
 {% endblock %}

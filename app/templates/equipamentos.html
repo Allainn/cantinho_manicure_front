@@ -14,7 +14,7 @@
             <td>Descrição</td>
             <td>Tempo de Uso</td>
             <td>Preço Tempo</td>
-            <td>Ação</td>
+            <td id="acao">Ação</td>
           </tr>
         </thead>
         <tbody>
@@ -24,8 +24,14 @@
               <td>{{data.tempo}}</td>
               <td>R$ {{data.preco_tempo}}</td>
               <td>
-                <a href="{{ url_for('main.equipamentos') }}/e/{{data.id}}" class="btn btn-primary btn-sm">Editar</a>
-                <a href="{{ url_for('main.equipamentos') }}/d/{{data.id}}" class="btn btn-danger btn-delete btn-sm">Deletar</a>
+                <a href="{{ url_for('main.equipamentos') }}/e/{{data.id}}" 
+                      class="btn btn-primary btn-sm">
+                  <i class="fa fa-edit"></i>    
+                </a>
+                <a href="{{ url_for('main.equipamentos') }}/d/{{data.id}}" 
+                      class="btn btn-danger btn-delete btn-sm">
+                  <i class="fa fa-trash"></i>
+                </a>
               </td>
             </tr>
           {% endfor %}

@@ -13,7 +13,7 @@
           <tr>
             <td>Descrição</td>
             <td>Sigla</td>
-            <td>Ação</td>
+            <td id="acao">Ação</td>
           </tr>
         </thead>
         <tbody>
@@ -22,8 +22,14 @@
               <td>{{data.descricao}}</td>
               <td>{{data.sigla}}</td>
               <td>
-                <a href="{{ url_for('main.tipos_quantidade') }}/e/{{data.id}}" class="btn btn-primary btn-sm">Editar</a>
-                <a href="{{ url_for('main.tipos_quantidade') }}/d/{{data.id}}" class="btn btn-danger btn-delete btn-sm">Deletar</a>
+                <a href="{{ url_for('main.tipos_quantidade') }}/e/{{data.id}}" 
+                      class="btn btn-primary btn-sm">
+                  <i class="fa fa-edit"></i>    
+                </a>
+                <a href="{{ url_for('main.tipos_quantidade') }}/d/{{data.id}}" 
+                      class="btn btn-danger btn-delete btn-sm">
+                  <i class="fa fa-trash"></i>
+                </a>
               </td>
             </tr>
           {% endfor %}

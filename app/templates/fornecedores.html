@@ -14,7 +14,7 @@
             <td>Nome</td>
             <td>Cidade</td>
             <td>Telefone</td>
-            <td>Ação</td>
+            <td id="acao">Ação</td>
           </tr>
         </thead>
         <tbody>
@@ -24,8 +24,14 @@
               <td>{{data.endereco.bairro.cidade.descricao}}</td>
               <td>{{data.telefone1}}</td>
               <td>
-                <a href="{{ url_for('main.fornecedores') }}/e/{{data.id}}" class="btn btn-primary btn-sm">Editar</a>
-                <a href="{{ url_for('main.fornecedores') }}/d/{{data.id}}" class="btn btn-danger btn-delete btn-sm">Deletar</a>
+                <a href="{{ url_for('main.fornecedores') }}/e/{{data.id}}" 
+                      class="btn btn-primary btn-sm">
+                  <i class="fa fa-edit"></i>    
+                </a>
+                <a href="{{ url_for('main.fornecedores') }}/d/{{data.id}}" 
+                      class="btn btn-danger btn-delete btn-sm">
+                  <i class="fa fa-trash"></i>
+                </a>
               </td>
             </tr>
           {% endfor %}

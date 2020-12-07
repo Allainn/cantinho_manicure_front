@@ -14,7 +14,7 @@
             <td>Login</td>
             <td>Email</td>
             <td>Tipo Usuário</td>
-            <td>Ação</td>
+            <td id="acao">Ação</td>
           </tr>
         </thead>
         <tbody>
@@ -24,8 +24,14 @@
               <td>{{data.email}}</td>
               <td>{{data.tipo_usuario.descricao}}</td>
               <td>
-                <a href="{{ url_for('main.usuarios') }}/e/{{data.id}}" class="btn btn-primary btn-sm">Editar</a>
-                <a href="{{ url_for('main.usuarios') }}/d/{{data.id}}" class="btn btn-danger btn-delete btn-sm">Deletar</a>
+                <a href="{{ url_for('main.usuarios') }}/e/{{data.id}}" 
+                      class="btn btn-primary btn-sm">
+                  <i class="fa fa-edit"></i>    
+                </a>
+                <a href="{{ url_for('main.usuarios') }}/d/{{data.id}}" 
+                      class="btn btn-danger btn-delete btn-sm">
+                  <i class="fa fa-trash"></i>
+                </a>
               </td>
             </tr>
           {% endfor %}

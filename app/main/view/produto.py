@@ -55,9 +55,9 @@ def deletar(id):
     response = requests.delete(url_base+"produtos/"+str(id), 
                                 auth=HTTPBasicAuth(session['user']['token'], ''))
     if response.ok:
-        flash("Produtos deletado com sucesso")
+        flash("Produto deletado com sucesso")
     else:
-        verificar(response, 'deletar produtos')
+        verificar(response, 'deletar produto')
     return redirect(url_for('main.produtos'))
 
 def editar(id):

@@ -1,0 +1,75 @@
+<script type=text/javascript>
+  let produto_select = document.getElementById('produto_select');
+  let quantInput = document.getElementById('quantidade');
+  let precoInput = document.getElementById('preco_un');
+  let tabela = document.getElementById('tabela');
+  let preco_total = document.getElementById('preco_total');
+  let optionHTML = '';
+
+  let calc_total = Number(preco_total.value.split('R$')[1]);
+
+  //preco_total.setAttribute("readonly", "readonly");
+
+  function deleteRow(r) {
+    var i = r.parentNode.parentNode.rowIndex;
+    document.getElementById("tabela").deleteRow(i);
+    try{
+      calc_total -= Number(r.parentNode.parentNode.childNodes[5].innerHTML.split('R$')[1]);  
+    } 
+    catch{
+      calc_total -= Number(r.parentNode.parentNode.childNodes[2].innerHTML.split('R$')[1]);
+    }
+    preco_total.value = 'R$ ' + calc_total.toFixed(2);
+  }
+  
+  $(function() {
+    $('button#adicionar').on('click', function(e) {
+      let opt = produto_select.options[produto_select.selectedIndex]
+
+      let linha = tabela.insertRow(-1);
+
+      let id = linha.insertCell(0);
+      let idText = document.createElement("input");
+      idText.setAttribute("id", opt.value);
+      idText.setAttribute("name", 'id');
+      idText.setAttribute("type", "text");
+      idText.setAttribute("value", opt.value);
+      idText.setAttribute("readonly", "readonly");
+      idText.classList.add('form-control');
+      id.appendChild(idText);
+
+      let descricao = linha.insertCell(1);
+      let descText = document.createTextNode(opt.text);
+      descricao.appendChild(descText);
+
+      let quant = Number(quantInput.value);
+      let preco = Number(precoInput.value);
+
+      let precoProd = quant * preco;
+      calc_total += precoProd;
+      
+      let linhaPreco = linha.insertCell(2);
+      let precoText = document.createTextNode("R$ " + precoProd.toFixed(2));
+      linhaPreco.appendChild(precoText);
+
+      let acao = linha.insertCell(3);
+      let acaoInput = document.createElement("button")
+      acaoInput.setAttribute("onclick", "deleteRow(this)");
+      acaoInput.classList.add('btn');
+      acaoInput.classList.add('btn-danger');
+      acaoInput.classList.add('btn-delete');
+      acaoInput.classList.add('btn-sm');
+      
+      let icon = document.createElement("i");
+      icon.classList.add('fa');
+      icon.classList.add('fa-trash');
+      acaoInput.appendChild(icon)
+      acao.appendChild(acaoInput);
+
+      preco_total.value = 'R$ ' + calc_total.toFixed(2);
+
+      precoInput.value = ''
+      quantInput.value = ''
+    });
+  });
+</script>
