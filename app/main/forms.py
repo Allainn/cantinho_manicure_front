@@ -82,9 +82,22 @@ class EquipamentoForm(FlaskForm):
 class CompraForm(FlaskForm):
     data = DateField('Data', validators=[DataRequired()])
     fornecedor = SelectField('Fornecedor', validators=[DataRequired()], choices=[])
-    produtos_select = SelectField('Produto', validators=[Optional()], choices=[], id='produto_select')
+    produto_select = SelectField('Produto', validators=[Optional()], choices=[])
     quantidade = IntegerField('Quantidade', validators=[Optional()])
     preco_un = DecimalField("Preço Unidade", validators=[Optional()])
     preco_total = StringField("Preço Total",validators=[DataRequired()], default='R$ 0.00')
+    observacao = TextAreaField('Observação', validators=[Optional(), Length(1, 256)])
+    submit = SubmitField('Registrar')
+
+class TipoServicoForm(FlaskForm):
+    descricao = StringField("Descrição",validators=[DataRequired(), Length(1, 64)])
+    equipamento_select = SelectField('Equipamento', validators=[Optional()], choices=[])
+    tempo_equipamento = IntegerField('Tempo', validators=[Optional()])
+    preco_tempo = DecimalField("Preço Tempo", validators=[Optional()])
+    produto_select = SelectField('Produto', validators=[Optional()], choices=[])
+    quantidade = IntegerField('Quantidade', validators=[Optional()])
+    preco_un = DecimalField("Preço Quantidade", validators=[Optional()])
+    tempo_total = IntegerField('Tempo Total', validators=[DataRequired()], default=0)
+    preco_total = StringField("Valor Total",validators=[DataRequired()], default='R$ 0.00')
     observacao = TextAreaField('Observação', validators=[Optional(), Length(1, 256)])
     submit = SubmitField('Registrar')

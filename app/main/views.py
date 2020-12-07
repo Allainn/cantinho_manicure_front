@@ -10,6 +10,7 @@ from .view import tipo_quantidade as tpq
 from .view import produto as pro
 from .view import equipamento as equ
 from .view import compra as com
+from .view import tipos_servico as tps
 
 headers = {
    'Content-Type': 'application/json'
@@ -142,3 +143,18 @@ def del_compra(id):
 @login_required
 def edit_compra(id):
    return com.editar(id)
+
+@main.route('/tipos_servico', methods=['GET', 'POST'])
+@login_required
+def tipos_servico():
+   return tps.main()
+
+@main.route('/tipos_servico/d/<int:id>', methods = ['POST','GET'])
+@login_required
+def del_tipo_servico(id):
+   return tps.deletar(id)
+
+@main.route('/tipos_servico/e/<int:id>', methods = ['POST','GET'])
+@login_required
+def edit_tipo_servico(id):
+   return tps.editar(id)

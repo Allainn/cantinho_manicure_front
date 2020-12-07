@@ -1,18 +1,24 @@
 <script type=text/javascript>
   let produto_select = document.getElementById('produto_select');
+  let equipamento_select = document.getElementById('equipamento_select');
+  let tempoInput = document.getElementById('tempo_equipamento');
+  let precoTempoInput = document.getElementById('preco_tempo');
   let quantInput = document.getElementById('quantidade');
   let precoInput = document.getElementById('preco_un');
-  let tabela = document.getElementById('tabela');
   let preco_total = document.getElementById('preco_total');
+  let tempo_total = document.getElementById('tempo_total');
   let optionHTML = '';
-
+  let calc_tempo = 0;
   let calc_total = Number(preco_total.value.split('R$')[1]);
+  try{
+    calc_tempo = Number(tempo_total.value);
+  } catch {}
 
   //preco_total.setAttribute("readonly", "readonly");
 
-  function deleteRow(r) {
+  function deleteRow(r, tabela) {
     var i = r.parentNode.parentNode.rowIndex;
-    document.getElementById("tabela").deleteRow(i);
+    tabela.deleteRow(i);
     try{
       calc_total -= Number(r.parentNode.parentNode.childNodes[5].innerHTML.split('R$')[1]);  
     } 
@@ -21,55 +27,86 @@
     }
     preco_total.value = 'R$ ' + calc_total.toFixed(2);
   }
+
+  function deleteRowProd(r) {
+    deleteRow(r, document.getElementById("tabela_produto"))
+  }
+
+  function deleteRowEqui(r) {
+    deleteRow(r, document.getElementById("tabela_equipamento"))
+  }
+
+  function add_line(tabela, opt, preco, obj) {
+    let linha = tabela.insertRow(-1);
+
+    let id = linha.insertCell(0);
+    let idText = document.createElement("input");
+    idText.setAttribute("id", opt.value);
+    idText.setAttribute("name", obj);
+    idText.setAttribute("type", "text");
+    idText.setAttribute("value", opt.value);
+    idText.setAttribute("readonly", "readonly");
+    idText.classList.add('form-control');
+    id.appendChild(idText);
+
+    let descricao = linha.insertCell(1);
+    let descText = document.createTextNode(opt.text);
+    descricao.appendChild(descText);
+
+    let linhaPreco = linha.insertCell(2);
+    let precoText = document.createTextNode("R$ " + preco.toFixed(2));
+    linhaPreco.appendChild(precoText);
+
+    let acao = linha.insertCell(3);
+    let acaoInput = document.createElement("button")
+    //acaoInput.setAttribute("onclick", "deleteRow(this)");
+    acaoInput.classList.add('btn');
+    acaoInput.classList.add('btn-danger');
+    acaoInput.classList.add('btn-delete');
+    acaoInput.classList.add('btn-sm');
+    
+    let icon = document.createElement("i");
+    icon.classList.add('fa');
+    icon.classList.add('fa-trash');
+    acaoInput.appendChild(icon)
+    acao.appendChild(acaoInput);
+
+    return acaoInput;
+  }
   
   $(function() {
-    $('button#adicionar').on('click', function(e) {
+    $('button#adicionar_prod').on('click', function(e) {
       let opt = produto_select.options[produto_select.selectedIndex]
-
-      let linha = tabela.insertRow(-1);
-
-      let id = linha.insertCell(0);
-      let idText = document.createElement("input");
-      idText.setAttribute("id", opt.value);
-      idText.setAttribute("name", 'id');
-      idText.setAttribute("type", "text");
-      idText.setAttribute("value", opt.value);
-      idText.setAttribute("readonly", "readonly");
-      idText.classList.add('form-control');
-      id.appendChild(idText);
-
-      let descricao = linha.insertCell(1);
-      let descText = document.createTextNode(opt.text);
-      descricao.appendChild(descText);
-
       let quant = Number(quantInput.value);
       let preco = Number(precoInput.value);
-
       let precoProd = quant * preco;
       calc_total += precoProd;
-      
-      let linhaPreco = linha.insertCell(2);
-      let precoText = document.createTextNode("R$ " + precoProd.toFixed(2));
-      linhaPreco.appendChild(precoText);
-
-      let acao = linha.insertCell(3);
-      let acaoInput = document.createElement("button")
-      acaoInput.setAttribute("onclick", "deleteRow(this)");
-      acaoInput.classList.add('btn');
-      acaoInput.classList.add('btn-danger');
-      acaoInput.classList.add('btn-delete');
-      acaoInput.classList.add('btn-sm');
-      
-      let icon = document.createElement("i");
-      icon.classList.add('fa');
-      icon.classList.add('fa-trash');
-      acaoInput.appendChild(icon)
-      acao.appendChild(acaoInput);
-
       preco_total.value = 'R$ ' + calc_total.toFixed(2);
+
+      acaoInput = add_line(document.getElementById('tabela_produto'), opt, precoProd, "prod");
+      acaoInput.setAttribute("onclick", "deleteRowProd(this)");
 
       precoInput.value = ''
       quantInput.value = ''
+    });
+  });
+
+  $(function() {
+    $('button#adicionar_equipamento').on('click', function(e) {
+      let opt = equipamento_select.options[equipamento_select.selectedIndex]
+      let tempo = Number(tempoInput.value);
+      let preco = Number(precoTempoInput.value);
+      let precoEqui = tempo * tempo;
+      calc_tempo += tempo
+      calc_total += precoEqui;
+      preco_total.value = 'R$ ' + calc_total.toFixed(2);
+      tempo_total.value = calc_tempo;
+
+      acaoInput = add_line(document.getElementById('tabela_equipamento'), opt, precoEqui, "equi");
+      acaoInput.setAttribute("onclick", "deleteRowEqui(this)");
+
+      tempoInput.value = ''
+      precoTempoInput.value = ''
     });
   });
 </script>

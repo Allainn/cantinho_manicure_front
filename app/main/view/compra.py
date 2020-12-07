@@ -16,7 +16,7 @@ def preencher(form):
     response_pro = requests.get(url_base+"produtos/", 
                             auth=HTTPBasicAuth(session['user']['token'], ''))
     if response_pro.ok:
-        form.produtos_select.choices = [(str(pro['id']), pro['descricao']) \
+        form.produto_select.choices = [(str(pro['id']), pro['descricao']) \
                         for pro in response_pro.json()['produtos']]
     response_forn = requests.get(url_base+"fornecedores/", 
                             auth=HTTPBasicAuth(session['user']['token'], ''))
@@ -33,7 +33,7 @@ def main():
     if response.ok:
         if form.validate_on_submit():
             data_com = form.data.data
-            produtos = [{'id':pro} for pro in request.form.getlist('id')]
+            produtos = [{'id':pro} for pro in request.form.getlist('prod')]
             valor = form.preco_total.data.split('R$')
             valor = float(valor[1]) if len(valor) == 2 else float(valor[0])
             if data_com:
