@@ -41,6 +41,11 @@
                         <li><a href="{{ url_for('main.servicos') }}">Serviços</a></li>
                     {% endif %}
                     {% if session['user'].tp_user|upper == 'ADMINISTRADOR' or 
+                          session['user'].tp_user|upper == 'FUNCIONARIO' or
+                          session['user'].tp_user|upper == 'CLIENTE'%}
+                        <li><a href="{{ url_for('main.agendar') }}">Agendar</a></li>
+                    {% endif %}
+                    {% if session['user'].tp_user|upper == 'ADMINISTRADOR' or 
                           session['user'].tp_user|upper == 'FUNCIONARIO'%}    
                         <li>
                             <a class="dropdown-toggle" href="#" role="button" 

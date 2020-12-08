@@ -5,6 +5,12 @@
 
 {% block page_content %}
 <div class="page-header">
-    <h1>Hello, {% if current_user.is_authenticated %}{{ session['user'].login }}{% else %}Stranger{% endif %}!</h1>
+    <h1>
+        {% if current_user.is_authenticated %}
+            Bem Vindo {{ session['user'].login }}!
+        {% else %}
+            Cantinho da Manicure!
+        {% endif %}
+    </h1>
 </div>
 {% endblock %}

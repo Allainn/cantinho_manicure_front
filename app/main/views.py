@@ -12,6 +12,7 @@ from .view import equipamento as equ
 from .view import compra as com
 from .view import tipos_servico as tps
 from .view import cad_servico as cser
+from .view import agendar as age
 
 headers = {
    'Content-Type': 'application/json'
@@ -20,6 +21,10 @@ headers = {
 @main.route('/')
 def index():
    return ind.index()
+
+@main.route('/agendar')
+def agendar():
+   return age.main()
 
 @main.route('/servicos')
 def servicos():
