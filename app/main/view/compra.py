@@ -80,10 +80,10 @@ def editar(id):
         preencher(form)
         form.submit.label.text = 'Alterar'
         if form.validate_on_submit():
-            data_com = form.data.data
             produtos = [{'id':pro} for pro in request.form.getlist('id')]
             valor = form.preco_total.data.split('R$')
             valor = float(valor[1]) if len(valor) == 2 else float(valor[0])
+            data_com = form.data.data
             if data_com:
                 data_com = data_com.strftime("%Y-%m-%d")
             data = {

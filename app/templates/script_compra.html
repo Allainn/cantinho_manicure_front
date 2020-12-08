@@ -1,6 +1,7 @@
 <script type=text/javascript>
   let produto_select = document.getElementById('produto_select');
   let equipamento_select = document.getElementById('equipamento_select');
+  let tp_servico_select = document.getElementById('tipo_servico');
   let tempoInput = document.getElementById('tempo_equipamento');
   let precoTempoInput = document.getElementById('preco_tempo');
   let quantInput = document.getElementById('quantidade');
@@ -9,9 +10,18 @@
   let tempo_total = document.getElementById('tempo_total');
   let optionHTML = '';
   let calc_tempo = 0;
-  let calc_total = Number(preco_total.value.split('R$')[1]);
+  let calc_total = 0;
+  let tipos_servico = [];
+  try {
+    calc_total = Number(preco_total.value.split('R$')[1]);
+  } catch {}
   try{
     calc_tempo = Number(tempo_total.value);
+  } catch {}
+  try {
+    let temp = "{{ tipos_servico|safe }}";
+    temp = temp.replace(/\'/g, '"');
+    tipos_servico = JSON.parse(temp);
   } catch {}
 
   //preco_total.setAttribute("readonly", "readonly");
@@ -34,6 +44,10 @@
 
   function deleteRowEqui(r) {
     deleteRow(r, document.getElementById("tabela_equipamento"))
+  }
+
+  function deleteRowTpServ(r) {
+    deleteRow(r, document.getElementById("tabela_tp_servico"))
   }
 
   function add_line(tabela, opt, preco, obj) {
@@ -83,7 +97,8 @@
       calc_total += precoProd;
       preco_total.value = 'R$ ' + calc_total.toFixed(2);
 
-      acaoInput = add_line(document.getElementById('tabela_produto'), opt, precoProd, "prod");
+      acaoInput = add_line(document.getElementById('tabela_produto'), opt, 
+                precoProd, "prod");
       acaoInput.setAttribute("onclick", "deleteRowProd(this)");
 
       precoInput.value = ''
@@ -102,11 +117,36 @@
       preco_total.value = 'R$ ' + calc_total.toFixed(2);
       tempo_total.value = calc_tempo;
 
-      acaoInput = add_line(document.getElementById('tabela_equipamento'), opt, precoEqui, "equi");
+      acaoInput = add_line(document.getElementById('tabela_equipamento'), opt, 
+                precoEqui, "equi");
       acaoInput.setAttribute("onclick", "deleteRowEqui(this)");
 
       tempoInput.value = ''
       precoTempoInput.value = ''
+    });
+  });
+
+  $(function() {
+    $('button#adicionar_tp_servico').on('click', function(e) {
+      let opt = tp_servico_select.options[tp_servico_select.selectedIndex]
+      let tempo = 0;
+      let preco = 0.0;
+      for (let i=0;i < tipos_servico.length;i++) {
+        if(tipos_servico[i]['id'] == opt.value){
+          tempo = Number(tipos_servico[i]['tempo'])
+          preco = Number(tipos_servico[i]['valor'])
+          console.log(tempo, preco);
+        }
+      }
+      calc_tempo += tempo;
+      calc_total += preco;
+
+      preco_total.value = 'R$ ' + calc_total.toFixed(2);
+      tempo_total.value = calc_tempo;
+
+      acaoInput = add_line(document.getElementById('tabela_tp_servico'), opt, 
+                preco, "tp_serv");
+      acaoInput.setAttribute("onclick", "deleteRowTpServ(this)");
     });
   });
 </script>

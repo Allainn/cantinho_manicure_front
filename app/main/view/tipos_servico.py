@@ -1,6 +1,5 @@
 from flask import current_app, redirect, session, url_for, flash, render_template, request
 from ..forms import TipoServicoForm
-from .table import ItemTable
 import requests
 from requests.auth import HTTPBasicAuth
 import json

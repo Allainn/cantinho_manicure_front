@@ -11,6 +11,7 @@ from .view import produto as pro
 from .view import equipamento as equ
 from .view import compra as com
 from .view import tipos_servico as tps
+from .view import cad_servico as cser
 
 headers = {
    'Content-Type': 'application/json'
@@ -158,3 +159,18 @@ def del_tipo_servico(id):
 @login_required
 def edit_tipo_servico(id):
    return tps.editar(id)
+
+@main.route('/cad_servicos', methods=['GET', 'POST'])
+@login_required
+def cad_servicos():
+   return cser.main()
+
+@main.route('/cad_servicos/d/<int:id>', methods = ['POST','GET'])
+@login_required
+def del_cad_servico(id):
+   return cser.deletar(id)
+
+@main.route('/cad_servicos/e/<int:id>', methods = ['POST','GET'])
+@login_required
+def edit_cad_servico(id):
+   return cser.editar(id)
